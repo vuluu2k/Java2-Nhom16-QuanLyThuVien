@@ -32,11 +32,11 @@ public class GiaoDienChinh extends javax.swing.JFrame {
     DefaultTableModel dtmtks;
     DefaultTableModel dtmqlt;
     DefaultTableModel dtmtkdg;
-    
+
     Connection conn = null;
     ResultSet rs = null;
     Statement stm = null;
-    
+
     public GiaoDienChinh() {
         initComponents();
         setVisible(true);
@@ -54,21 +54,21 @@ public class GiaoDienChinh extends javax.swing.JFrame {
         dtmtkdg = (DefaultTableModel) tbthongkedocgia.getModel();
 
     }
-    
-    public Connection getConnect(){
+
+    public Connection getConnect() {
         try {
             String url = "jdbc:derby://localhost:1527/QuanLyThuVien";
             String user = "root";
             String pass = "123456";
-            Class.forName("org.apache.derby.jdbc.ClientDriver"); 
-            System.out.println("kết nối thành công database với tài khoản " + user );
-            return  DriverManager.getConnection(url,user,pass);
-        } catch (ClassNotFoundException|SQLException e)
-        {
-            JOptionPane.showMessageDialog(null,"Khong the ket noi voi database \n"+e);
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            System.out.println("kết nối thành công database với tài khoản " + user);
+            return DriverManager.getConnection(url, user, pass);
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Khong the ket noi voi database \n" + e);
         }
         return null;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1230,23 +1230,23 @@ public class GiaoDienChinh extends javax.swing.JFrame {
 //========================================QUẢN LÝ SÁCH==================================================
 
     private void btnhienthibangsachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhienthibangsachActionPerformed
-       
+
     }//GEN-LAST:event_btnhienthibangsachActionPerformed
 
     private void btnxoasachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxoasachActionPerformed
-       
+
     }//GEN-LAST:event_btnxoasachActionPerformed
 
     private void btnthemsachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemsachActionPerformed
-        
+
     }//GEN-LAST:event_btnthemsachActionPerformed
 
     private void btntimkiemsachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntimkiemsachActionPerformed
-        
+
     }//GEN-LAST:event_btntimkiemsachActionPerformed
 
     private void btnsuasachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsuasachActionPerformed
-        
+
     }//GEN-LAST:event_btnsuasachActionPerformed
 
     private void tbsachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbsachMouseClicked
@@ -1287,23 +1287,23 @@ public class GiaoDienChinh extends javax.swing.JFrame {
 //===========================================QUẢN LÝ ĐỘC GIẢ=================================================
 
     private void btnhienthidocgiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhienthidocgiaActionPerformed
-       
+
     }//GEN-LAST:event_btnhienthidocgiaActionPerformed
 
     private void btnthemdocgiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemdocgiaActionPerformed
-        
+
     }//GEN-LAST:event_btnthemdocgiaActionPerformed
 
     private void tbdocgiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbdocgiaMouseClicked
         int row = tbdocgia.getSelectedRow();
-        
+
         String idDocGia = (String) dtmdg.getValueAt(row, 0);
         String hoTen = (String) dtmdg.getValueAt(row, 1);
         String ngaySinh = (String) dtmdg.getValueAt(row, 2);
         String diaChi = (String) dtmdg.getValueAt(row, 3);
         String ngheNghiep = (String) dtmdg.getValueAt(row, 4);
         String sdt = (String) dtmdg.getValueAt(row, 5);
-        
+
         txtiddocgia.setText(idDocGia);
         txthoten.setText(hoTen);
         txtngaysinh.setText(ngaySinh);
@@ -1313,15 +1313,15 @@ public class GiaoDienChinh extends javax.swing.JFrame {
     }//GEN-LAST:event_tbdocgiaMouseClicked
 
     private void btnsuadocgiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsuadocgiaActionPerformed
-        
+
     }//GEN-LAST:event_btnsuadocgiaActionPerformed
 
     private void btnxoadocgiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxoadocgiaActionPerformed
-        
+
     }//GEN-LAST:event_btnxoadocgiaActionPerformed
 
     private void btntimkiemdocgiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntimkiemdocgiaActionPerformed
-        
+
     }//GEN-LAST:event_btntimkiemdocgiaActionPerformed
 
     private void btnhuydocgiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhuydocgiaActionPerformed
@@ -1340,7 +1340,7 @@ public class GiaoDienChinh extends javax.swing.JFrame {
 //=================================QUẢN LÝ MƯỢN TRẢ SÁCH=================================================
 
     private void btnhienthiqlmuontraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhienthiqlmuontraActionPerformed
-        
+
         try {
             conn = getConnect();
             DefaultTableModel model = (DefaultTableModel) tbmuontra.getModel();
@@ -1348,7 +1348,7 @@ public class GiaoDienChinh extends javax.swing.JFrame {
             stm = conn.createStatement();
             String sql = "SELECT *FROM MUONTRASACH";
             ResultSet rs = stm.executeQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 String idDocGia = rs.getString("IDDOCGIA");
                 String hoTen = rs.getString("HOTEN");
                 String idSach = rs.getString("IDSACH");
@@ -1357,7 +1357,7 @@ public class GiaoDienChinh extends javax.swing.JFrame {
                 Date ngayHetHan = rs.getDate("NGAYHETHAN");
                 Date ngayThucTra = rs.getDate("NGAYTHUCTRA");
                 model.addRow(new Object[]{
-                    idDocGia,hoTen,idSach,tenSach,ngayMuon,ngayHetHan,ngayThucTra
+                    idDocGia, hoTen, idSach, tenSach, ngayMuon, ngayHetHan, ngayThucTra
                 });
             }
         } catch (SQLException ex) {
@@ -1366,11 +1366,11 @@ public class GiaoDienChinh extends javax.swing.JFrame {
     }//GEN-LAST:event_btnhienthiqlmuontraActionPerformed
 
     private void btnthemqlmuontraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemqlmuontraActionPerformed
-            
+
     }//GEN-LAST:event_btnthemqlmuontraActionPerformed
 
     private void btnsuaqlmuontraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsuaqlmuontraActionPerformed
-       
+
     }//GEN-LAST:event_btnsuaqlmuontraActionPerformed
 
     private void tbmuontraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbmuontraMouseClicked
@@ -1379,10 +1379,10 @@ public class GiaoDienChinh extends javax.swing.JFrame {
         String hoTen = (String) dtmmts.getValueAt(row, 1);
         String idSach = (String) dtmmts.getValueAt(row, 2);
         String tenSach = (String) dtmmts.getValueAt(row, 3);
-        String ngayMuon =  dtmmts.getValueAt(row, 4).toString();
-        String ngayHenTra =  dtmmts.getValueAt(row, 5).toString();
-        String ngayThucTra = (String)dtmmts.getValueAt(row, 6);
-        
+        String ngayMuon = dtmmts.getValueAt(row, 4).toString();
+        String ngayHenTra = dtmmts.getValueAt(row, 5).toString();
+        String ngayThucTra = (String) dtmmts.getValueAt(row, 6);
+
         txtiddocgiaqlmuontra.setText(idDocGia);
         txthotenqlmuontra.setText(hoTen);
         txtidsachqlmuontra.setText(idSach);
@@ -1393,7 +1393,7 @@ public class GiaoDienChinh extends javax.swing.JFrame {
     }//GEN-LAST:event_tbmuontraMouseClicked
 
     private void btnxoaqlmuontraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxoaqlmuontraActionPerformed
-        
+
     }//GEN-LAST:event_btnxoaqlmuontraActionPerformed
 
     private void btnhuyqlmuontraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhuyqlmuontraActionPerformed
@@ -1411,57 +1411,96 @@ public class GiaoDienChinh extends javax.swing.JFrame {
     }//GEN-LAST:event_btnthoatqlmuontraActionPerformed
 
     private void btntimkiemqlmuontraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntimkiemqlmuontraActionPerformed
-        
+
     }//GEN-LAST:event_btntimkiemqlmuontraActionPerformed
 
     private void btncapnhatthongkesachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncapnhatthongkesachActionPerformed
-        
+
     }//GEN-LAST:event_btncapnhatthongkesachActionPerformed
 
 //==============================================QUẢN LÝ THẺ THƯ VIỆN================================================================
-
-    private void btnhienthitheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhienthitheActionPerformed
-
+    public void loadDataQLThe() {
         try {
-            conn = getConnect();
             dtmqlt.setRowCount(0);
             stm = conn.createStatement();
             String q = "SELECT * FROM THETHUVIEN";
             ResultSet rs = stm.executeQuery(q);
-            while (rs.next()) {                
+            while (rs.next()) {
                 String idThe = rs.getString("idThe");
                 String hoTen = rs.getString("hoTen");
                 Date ngayCap = rs.getDate("ngayCap");
                 Date ngayHetHan = rs.getDate("ngayHetHan");
                 dtmqlt.addRow(new Object[]{
-                    idThe,hoTen,ngayCap,ngayHetHan
+                    idThe, hoTen, ngayCap, ngayHetHan
                 });
             }
+            conn.close();
         } catch (Exception e) {
-            System.out.println("Có lỗi xảy ra!!! "+e.getMessage());
+            System.out.println("Có lỗi xảy ra!!! " + e.getMessage());
         }
+    }
+    private void btnhienthitheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhienthitheActionPerformed
+        conn = getConnect();
+        loadDataQLThe();
     }//GEN-LAST:event_btnhienthitheActionPerformed
 
     private void btnthemtheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemtheActionPerformed
-        
+        conn = getConnect();
+        String sql = "INSERT INTO THETHUVIEN(idThe,hoTen,ngayCap,ngayHetHan) VALUES(?,?,?,?)";
+        try {
+            PreparedStatement pre = conn.prepareStatement("insert into THETHUVIEN values (?,?,?,?)");
+            pre.setString(1, txtidthe.getText());
+            pre.setString(2, txthotenthe.getText());
+            pre.setString(3, txtngaycap.getText());
+            pre.setString(4, txthethan.getText());
+            pre.executeUpdate();
+            loadDataQLThe();
+            conn.close();
+
+        } catch (Exception ex) {
+            System.out.println("Lỗi");
+        }
     }//GEN-LAST:event_btnthemtheActionPerformed
 
     private void btnsuatheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsuatheActionPerformed
-        
+        conn = getConnect();
+        String sql = "UPDATE THETHUVIEN SET hoTen=?," + "ngayCap=?," + "ngayHetHan=?" + "WHERE idThe=?";
+        try {
+            PreparedStatement pre = conn.prepareStatement("update THETHUVIEN set hoTen=?,ngayCap=?,ngayHetHan=? where idThe=?");
+            pre.setString(4, txtidthe.getText());
+            pre.setString(1, txthotenthe.getText());
+            pre.setString(2, txtngaycap.getText());
+            pre.setString(3, txthethan.getText());
+            pre.executeUpdate();
+            loadDataQLThe();
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println("Lỗi");
+        }
     }//GEN-LAST:event_btnsuatheActionPerformed
 
     private void btnxoatheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxoatheActionPerformed
-        
+        conn = getConnect();
+        String sql = "DELETE FROM THETHUVIEN WHERE idThe=?";
+        try {
+            PreparedStatement pre = conn.prepareStatement("DELETE FROM THETHUVIEN WHERE idThe=?");
+            pre.setString(1, txtidthe.getText());
+            pre.executeUpdate();
+            loadDataQLThe();
+            conn.close();
+        } catch (Exception e) {
+            System.out.println("Lỗi");
+        }
     }//GEN-LAST:event_btnxoatheActionPerformed
 
     private void tbtheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbtheMouseClicked
         int row = tbthe.getSelectedRow();
         String idthe = (String) tbthe.getValueAt(row, 0);
         String hoten = (String) tbthe.getValueAt(row, 1);
-        String ngaycap =tbthe.getValueAt(row, 2).toString();
+        String ngaycap = tbthe.getValueAt(row, 2).toString();
 //        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd"); 
 //        String ngaycap = dateFormat.format(tbthe.getValueAt(row, 2));
-        String hethan =tbthe.getValueAt(row, 3).toString();
+        String hethan = tbthe.getValueAt(row, 3).toString();
 //        String hethan = dateFormat.format(tbthe.getValueAt(row, 3));
         txtidthe.setText(idthe);
         txthotenthe.setText(hoten);
@@ -1470,7 +1509,50 @@ public class GiaoDienChinh extends javax.swing.JFrame {
     }//GEN-LAST:event_tbtheMouseClicked
 
     private void btntimkiemtheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntimkiemtheActionPerformed
-        
+        conn = getConnect();
+        dtmqlt.setRowCount(0);
+        if (rbidthe.isSelected()) {
+            String sql = "SELECT * FROM THETHUVIEN WHERE idTHE =?";
+            try {
+                PreparedStatement pre = conn.prepareStatement("SELECT * FROM THETHUVIEN WHERE idTHE =?");
+                pre.setString(1, txtidthe.getText());
+                ResultSet rs = pre.executeQuery();
+                while (rs.next()) {
+                    String idThe = rs.getString("idThe");
+                    String hoTen = rs.getString("hoTen");
+                    Date ngayCap = rs.getDate("ngayCap");
+                    Date ngayHetHan = rs.getDate("ngayHetHan");
+                    
+                    dtmqlt.addRow(new Object[]{
+                        idThe, hoTen, ngayCap, ngayHetHan
+                    });
+                }
+                conn.close();
+            } catch (Exception e) {
+                System.out.println("Lỗi!!!");
+            }finally{
+                return;
+            }
+        }
+        String sql = "SELECT * FROM THETHUVIEN WHERE hoTen =?";
+            try {
+                PreparedStatement pre = conn.prepareStatement("SELECT * FROM THETHUVIEN WHERE hoTen =?");
+                pre.setString(1, txthotenthe.getText());
+                ResultSet rs = pre.executeQuery();
+                while (rs.next()) {
+                    String idThe = rs.getString("idThe");
+                    String hoTen = rs.getString("hoTen");
+                    Date ngayCap = rs.getDate("ngayCap");
+                    Date ngayHetHan = rs.getDate("ngayHetHan");
+                    
+                    dtmqlt.addRow(new Object[]{
+                        idThe, hoTen, ngayCap, ngayHetHan
+                    });
+                }
+                conn.close();
+            } catch (Exception e) {
+                System.out.println("Lỗi!!!");
+            }
     }//GEN-LAST:event_btntimkiemtheActionPerformed
 
     private void btnhuytheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhuytheActionPerformed
@@ -1486,14 +1568,12 @@ public class GiaoDienChinh extends javax.swing.JFrame {
 
 //===================================================THỐNG KÊ ĐỘC GIẢ QUÁ HẠN======================================================
     private void btncapnhatthongkedocgiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncapnhatthongkedocgiaActionPerformed
-        
+
     }//GEN-LAST:event_btncapnhatthongkedocgiaActionPerformed
 
     private void txtidsachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtidsachActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtidsachActionPerformed
-    
-
 
     /**
      * @param args the command line arguments
