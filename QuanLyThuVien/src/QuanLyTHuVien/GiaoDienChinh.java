@@ -7,6 +7,7 @@ package QuanLyTHuVien;
 
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -60,6 +61,7 @@ public class GiaoDienChinh extends javax.swing.JFrame {
             String user = "root";
             String pass = "123456";
             Class.forName("org.apache.derby.jdbc.ClientDriver"); 
+            System.out.println("kết nối thành công database với tài khoản " + user );
             return  DriverManager.getConnection(url,user,pass);
         } catch (ClassNotFoundException|SQLException e)
         {
@@ -1419,7 +1421,25 @@ public class GiaoDienChinh extends javax.swing.JFrame {
 //==============================================QUẢN LÝ THẺ THƯ VIỆN================================================================
 
     private void btnhienthitheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhienthitheActionPerformed
-        
+
+        try {
+            conn = getConnect();
+            dtmqlt.setRowCount(0);
+            stm = conn.createStatement();
+            String q = "SELECT * FROM THETHUVIEN";
+            ResultSet rs = stm.executeQuery(q);
+            while (rs.next()) {                
+                String idThe = rs.getString("idThe");
+                String hoTen = rs.getString("hoTen");
+                Date ngayCap = rs.getDate("ngayCap");
+                Date ngayHetHan = rs.getDate("ngayHetHan");
+                dtmqlt.addRow(new Object[]{
+                    idThe,hoTen,ngayCap,ngayHetHan
+                });
+            }
+        } catch (Exception e) {
+            System.out.println("Có lỗi xảy ra!!! "+e.getMessage());
+        }
     }//GEN-LAST:event_btnhienthitheActionPerformed
 
     private void btnthemtheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemtheActionPerformed
@@ -1438,8 +1458,11 @@ public class GiaoDienChinh extends javax.swing.JFrame {
         int row = tbthe.getSelectedRow();
         String idthe = (String) tbthe.getValueAt(row, 0);
         String hoten = (String) tbthe.getValueAt(row, 1);
-        String ngaycap = (String) tbthe.getValueAt(row, 2);
-        String hethan = (String) tbthe.getValueAt(row, 3);
+        String ngaycap =tbthe.getValueAt(row, 2).toString();
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd"); 
+//        String ngaycap = dateFormat.format(tbthe.getValueAt(row, 2));
+        String hethan =tbthe.getValueAt(row, 3).toString();
+//        String hethan = dateFormat.format(tbthe.getValueAt(row, 3));
         txtidthe.setText(idthe);
         txthotenthe.setText(hoten);
         txtngaycap.setText(ngaycap);
