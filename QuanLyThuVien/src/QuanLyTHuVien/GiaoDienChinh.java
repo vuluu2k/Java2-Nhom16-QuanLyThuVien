@@ -1439,6 +1439,44 @@ public class GiaoDienChinh extends javax.swing.JFrame {
             System.out.println("Có lỗi xảy ra!!! " + e.getMessage());
         }
     }
+    public boolean validateInputFormQLThe(){
+        if (txtidthe.getText().equals("") || txthotenthe.getText().equals("") || txtngaycap.getText().equals("")
+                || txthethan.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Không được để trống các trường!");
+            return false;
+        }
+        return true;
+    }
+    public boolean validateDate(){
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date ngayCap = sdf.parse(txtngaycap.getText());
+            Date ngayHetHan = sdf.parse(txthethan.getText());
+            if (ngayCap.compareTo(ngayHetHan) >=0) {
+                throw new Exception("Ngày cấp phải trước ngày hết hạn!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+            return false;
+        }
+        return true;
+    }
+    public boolean checkExistID(){
+        try {
+            String existID = "SELECT count(*) FROM THETHUVIEN WHERE idThe= ?";
+            PreparedStatement ps = conn.prepareStatement(existID);
+            ps.setString(1, txtidthe.getText());
+            ResultSet r = ps.executeQuery();
+            if (r.next()) {
+                if (r.getInt(1) !=0) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+        return false;
+    }
     private void btnhienthitheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhienthitheActionPerformed
         conn = getConnect();
         loadDataQLThe();
@@ -1446,6 +1484,20 @@ public class GiaoDienChinh extends javax.swing.JFrame {
 
     private void btnthemtheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemtheActionPerformed
         conn = getConnect();
+        //dữ liệu đầu vào không được để trống
+        if (!validateInputFormQLThe()) {
+            return;
+        }
+        // kiểm tra id có trong db không?
+        if (checkExistID()) {
+            JOptionPane.showMessageDialog(rootPane, "ID thẻ đã tồn tại không thể thêm!");
+            return;
+        }
+        // Định dạng ngày
+        if (!validateDate()) {
+            return;
+        }
+        //Thêm dữ liệu
         String sql = "INSERT INTO THETHUVIEN(idThe,hoTen,ngayCap,ngayHetHan) VALUES(?,?,?,?)";
         try {
             PreparedStatement pre = conn.prepareStatement("insert into THETHUVIEN values (?,?,?,?)");
@@ -1458,12 +1510,27 @@ public class GiaoDienChinh extends javax.swing.JFrame {
             conn.close();
 
         } catch (Exception ex) {
-            System.out.println("Lỗi");
+            JOptionPane.showMessageDialog(rootPane, "Dữ liệu nhập vào không hợp lệ \n"
+                    + "Định dạng ngày: Năm-Tháng-Ngày");
         }
     }//GEN-LAST:event_btnthemtheActionPerformed
 
     private void btnsuatheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsuatheActionPerformed
         conn = getConnect();
+        //dữ liệu vào không thể trống
+        if (!validateInputFormQLThe()) {
+            return;
+        }
+        // kiểm tra id
+        if (!checkExistID()) {
+            JOptionPane.showMessageDialog(rootPane, "ID thẻ không tồn tại không thể sửa!");
+            return;
+        }
+        // định dạng ngày
+        if (!validateDate()) {
+            return;
+        }
+        //Sửa
         String sql = "UPDATE THETHUVIEN SET hoTen=?," + "ngayCap=?," + "ngayHetHan=?" + "WHERE idThe=?";
         try {
             PreparedStatement pre = conn.prepareStatement("update THETHUVIEN set hoTen=?,ngayCap=?,ngayHetHan=? where idThe=?");
@@ -1475,12 +1542,19 @@ public class GiaoDienChinh extends javax.swing.JFrame {
             loadDataQLThe();
             conn.close();
         } catch (Exception ex) {
-            System.out.println("Lỗi");
+            JOptionPane.showMessageDialog(rootPane, "Dữ liệu nhập vào không hợp lệ \n"
+                    + "Định dạng ngày: Năm-Tháng-Ngày");
         }
     }//GEN-LAST:event_btnsuatheActionPerformed
 
     private void btnxoatheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxoatheActionPerformed
         conn = getConnect();
+        //kiểm tra id
+        if (!checkExistID()) {
+            JOptionPane.showMessageDialog(rootPane, "ID thẻ không tồn tại không thể xóa!");
+            return;
+        }
+        //xóa
         String sql = "DELETE FROM THETHUVIEN WHERE idThe=?";
         try {
             PreparedStatement pre = conn.prepareStatement("DELETE FROM THETHUVIEN WHERE idThe=?");
@@ -1489,7 +1563,7 @@ public class GiaoDienChinh extends javax.swing.JFrame {
             loadDataQLThe();
             conn.close();
         } catch (Exception e) {
-            System.out.println("Lỗi");
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
     }//GEN-LAST:event_btnxoatheActionPerformed
 
@@ -1563,8 +1637,8 @@ public class GiaoDienChinh extends javax.swing.JFrame {
     }//GEN-LAST:event_btnhuytheActionPerformed
 
     private void btnthoattheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthoattheActionPerformed
-        int kt = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc chắn muốn xóa thông tin này không?", "Thông báo", JOptionPane.YES_NO_OPTION);
-        if(kt == 0){
+        int exit = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc chắn muốn xóa thông tin này không?", "Thông báo", JOptionPane.YES_NO_OPTION);
+        if(exit == 0){
             System.exit(0);
         }
     }//GEN-LAST:event_btnthoattheActionPerformed
