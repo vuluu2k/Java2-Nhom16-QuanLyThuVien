@@ -1572,7 +1572,7 @@ public class GiaoDienChinh extends javax.swing.JFrame {
         String idthe = (String) tbthe.getValueAt(row, 0);
         String hoten = (String) tbthe.getValueAt(row, 1);
         String ngaycap = tbthe.getValueAt(row, 2).toString();
-//        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd"); 
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
 //        String ngaycap = dateFormat.format(tbthe.getValueAt(row, 2));
         String hethan = tbthe.getValueAt(row, 3).toString();
 //        String hethan = dateFormat.format(tbthe.getValueAt(row, 3));
@@ -1584,11 +1584,19 @@ public class GiaoDienChinh extends javax.swing.JFrame {
 
     private void btntimkiemtheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntimkiemtheActionPerformed
         conn = getConnect();
+        if (!rbidthe.isSelected() && !rbhotenthe.isSelected()) {
+            JOptionPane.showMessageDialog(rootPane, "Vui lòng chọn RadioButton để tìm kiếm!");
+            return;
+        }
         dtmqlt.setRowCount(0);
         if (rbidthe.isSelected()) {
-            String sql = "SELECT * FROM THETHUVIEN WHERE idTHE =?";
+            if (txtidthe.getText().equals("")) {
+                JOptionPane.showMessageDialog(rootPane, "Vui lòng nhập ID thẻ!");
+                return;
+            }
+            String sql = "SELECT * FROM THETHUVIEN WHERE idTHE=?";
             try {
-                PreparedStatement pre = conn.prepareStatement("SELECT * FROM THETHUVIEN WHERE idTHE =?");
+                PreparedStatement pre = conn.prepareStatement("SELECT * FROM THETHUVIEN WHERE idTHE=?");
                 pre.setString(1, txtidthe.getText());
                 ResultSet rs = pre.executeQuery();
                 while (rs.next()) {
@@ -1603,11 +1611,15 @@ public class GiaoDienChinh extends javax.swing.JFrame {
                 }
                 conn.close();
             } catch (Exception e) {
-                System.out.println("Lỗi!!!");
+                JOptionPane.showMessageDialog(rootPane, e.getMessage());
             }finally{
                 return;
             }
         }
+        if (txthotenthe.getText().equals("")) {
+                JOptionPane.showMessageDialog(rootPane, "Vui lòng nhập họ tên thẻ!");
+                return;
+            }
         String sql = "SELECT * FROM THETHUVIEN WHERE hoTen =?";
             try {
                 PreparedStatement pre = conn.prepareStatement("SELECT * FROM THETHUVIEN WHERE hoTen =?");
@@ -1625,7 +1637,7 @@ public class GiaoDienChinh extends javax.swing.JFrame {
                 }
                 conn.close();
             } catch (Exception e) {
-                System.out.println("Lỗi!!!");
+                JOptionPane.showMessageDialog(rootPane, e.getMessage());
             }
     }//GEN-LAST:event_btntimkiemtheActionPerformed
 
