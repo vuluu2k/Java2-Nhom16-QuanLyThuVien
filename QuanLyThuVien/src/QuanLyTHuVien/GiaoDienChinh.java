@@ -1228,18 +1228,67 @@ public class GiaoDienChinh extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 //========================================QUẢN LÝ SÁCH==================================================
-
-    private void btnhienthibangsachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhienthibangsachActionPerformed
-
-    }//GEN-LAST:event_btnhienthibangsachActionPerformed
+    private void load_DB(){
+        try{
+            DefaultTableModel modelsach= (DefaultTableModel) tbsach.getModel();
+            stm= conn.createStatement();
+            modelsach.setRowCount(0);
+            ResultSet rs= stm.executeQuery("select * from SACH");
+            while(rs.next()){
+                String id=rs.getString("IDSACH");
+                String name=rs.getString("TENSACH");
+                String author=rs.getString("TACGIA");
+                int number=rs.getInt("SOLUONG");
+                String type=rs.getString("THELOAI");
+                double cost=rs.getDouble("GIASACH");
+                String publisher=rs.getString("NHAXUATBAN");
+                String gps=rs.getString("VITRI");
+                modelsach.addRow(new Object[]{
+                    id,name,author,number,type,cost,publisher,gps
+                });
+            }
+            conn.close();
+        } catch (Exception ex){
+            System.out.println("Error:"+ ex.getMessage());
+        }
+    }
+// check box don't input data
+    private boolean IsEmpty(){
+        if(txtidsach.getText().equals("")||txttensach.getText().equals("")||txttacgia.getText().equals("")||txtsoluong.getText().equals("")||txttheloai.getText().equals("")||txtgiasach.getText().equals("")||txtnxb.getText().equals("")){
+            return true;
+        }
+        return false;
+    }
+//    private boolean IdIsEmpty(){
+//        
+//    }
+    private void add(){
+        conn=getConnect();
+        if(IsEmpty()){
+            JOptionPane.showMessageDialog(rootPane, "Có thành phần bạn đang để trống","Thông Báo",JOptionPane.ERROR_MESSAGE);
+        }
+        String SQL="insert into SACH"
+                + "values(?,?,?,?,?,?,?,?)";
+        try{
+            PreparedStatement pre= conn.prepareStatement(SQL);
+            pre.setString(1,txtidsach.getText());
+            pre.setString(2,txttensach.getText());
+            pre.setString(3,txttacgia.getText());
+            pre.setInt(4,Integer.parseInt(txtsoluong.getText()));
+            pre.setString(5,txttheloai.getText());
+            pre.setDouble(6,Double.parseDouble(txtgiasach.getText()));
+            pre.setString(7,txtnxb.getText());
+            pre.setString(8,txtvitri.getText());
+            pre.executeUpdate();
+            load_DB();
+        } catch (Exception ex){
+            System.out.println("Data not working");
+        }
+    }
 
     private void btnxoasachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxoasachActionPerformed
 
     }//GEN-LAST:event_btnxoasachActionPerformed
-
-    private void btnthemsachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemsachActionPerformed
-
-    }//GEN-LAST:event_btnthemsachActionPerformed
 
     private void btntimkiemsachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntimkiemsachActionPerformed
 
