@@ -1563,7 +1563,10 @@ public class GiaoDienChinh extends javax.swing.JFrame {
     }//GEN-LAST:event_btnhuytheActionPerformed
 
     private void btnthoattheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthoattheActionPerformed
-        System.exit(0);
+        int kt = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc chắn muốn xóa thông tin này không?", "Thông báo", JOptionPane.YES_NO_OPTION);
+        if(kt == 0){
+            System.exit(0);
+        }
     }//GEN-LAST:event_btnthoattheActionPerformed
 
 //===================================================THỐNG KÊ ĐỘC GIẢ QUÁ HẠN======================================================
