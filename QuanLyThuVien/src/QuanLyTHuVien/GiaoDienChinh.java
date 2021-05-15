@@ -1609,6 +1609,10 @@ public class GiaoDienChinh extends javax.swing.JFrame {
                         idThe, hoTen, ngayCap, ngayHetHan
                     });
                 }
+                if (dtmqlt.getRowCount() ==0) {
+                    JOptionPane.showMessageDialog(rootPane, "Không tìm thấy dữ liệu!");
+                    return;
+                }
                 conn.close();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(rootPane, e.getMessage());
@@ -1634,6 +1638,10 @@ public class GiaoDienChinh extends javax.swing.JFrame {
                     dtmqlt.addRow(new Object[]{
                         idThe, hoTen, ngayCap, ngayHetHan
                     });
+                }
+                if (dtmqlt.getRowCount() ==0) {
+                    JOptionPane.showMessageDialog(rootPane, "Không tìm thấy dữ liệu!");
+                    return;
                 }
                 conn.close();
             } catch (Exception e) {
